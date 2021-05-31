@@ -1,11 +1,15 @@
 package unida8.colecciones;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
+import java.util.Iterator;
 
 public class Colecciones {
 
@@ -42,6 +46,18 @@ public class Colecciones {
 		lista.add("cuatro");
 
 		System.out.println(algunaSeRepiteAlMenos3Veces(lista));
+
+		// Test5
+		Deque<Integer> pil = new LinkedList<Integer>();
+		pil.push(89);
+		pil.push(-55);
+		pil.push(-19);
+		pil.push(29);
+		pil.push(37);
+		pil.push(-5);
+		pil.push(23);
+
+		System.out.println(negativosAbajoPositivosArriba(pil));
 
 	}
 
@@ -81,7 +97,7 @@ public class Colecciones {
 		return true;
 		// return mapa.values().stream().distinct().count() == mapa.values().size();
 	}
-	
+
 	private static boolean algunaSeRepiteAlMenos3Veces(List<String> cadena) {
 		/*
 		 * Método llamado algunaSeRepiteAlMenos3Veces que acepte una lista de cadenas
@@ -102,6 +118,29 @@ public class Colecciones {
 			}
 		}
 		return false;
+	}
+
+	private static Deque<Integer> negativosAbajoPositivosArriba(Deque<Integer> pila) {
+		/*
+		 * Método llamado negativosAbajoPositivosArriba que acepte una pila de números
+		 * enteros como parámetro y la reorganice para que se queden debajo los
+		 * negativos y encima los positivos. Usa una cola como estructura de datos
+		 * auxiliar para realizar el proceso.
+		 */
+		Queue<Integer> cola = new LinkedList<Integer>();
+		Iterator<Integer> i = pila.iterator();
+		while (i.hasNext()) {
+			int num = i.next();
+			if (num >= 0) {
+				cola.offer(num);
+				i.remove();
+			}
+		}
+		while (!cola.isEmpty()) {
+			pila.push(cola.poll());
+		}
+		return pila;
+
 	}
 
 }
