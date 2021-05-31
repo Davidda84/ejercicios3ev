@@ -117,6 +117,20 @@ public class Colecciones {
 
 		System.out.println(interseccion(mapa1, mapa2));
 
+		// Test9
+		Map<String, Integer> mapa3 = new LinkedHashMap<>();
+		mapa3.put("Juan", 33);
+		mapa3.put("Hugo", 29);
+		mapa3.put("Ana", 45);
+		mapa3.put("Luis", 47);
+		mapa3.put("Mario", 33);
+		mapa3.put("Rosa", 29);
+		mapa3.put("Carmen", 33);
+		mapa3.put("Elena", 59);
+		mapa3.put("Benito", 33);
+
+		System.out.println(ValorMenosRepetido(mapa3));
+
 	}
 
 	private static void eliminarLasDeLongitudPar(Set<String> conjunto) {
@@ -256,14 +270,16 @@ public class Colecciones {
 		}
 		return pila;
 	}
-	
+
 	public static Map<String, Integer> interseccion(Map<String, Integer> mapa1, Map<String, Integer> mapa2) {
-		/*Método llamado interseccion que acepte dos mapas, ambos de String a Integer, y retorne un
-		nuevo mapa que contenga la intersección de los dos primeros. Por ejemplo, si recibe los mapas:
-		{Fernando=53, Manuela=29, Ana=41, Luis=65, Mario=33, Adrián=21, Carmen=39, Elena=19}
-		{Valentina=37, Ana=41, Mario=33, Benito=67, Carmen=39, Ramón=44, Elena=19, Hugo=32}
-		retornará el mapa:
-		{Ana=41, Mario=33, Carmen=39, Elena=19}*/
+		/*
+		 * Método llamado interseccion que acepte dos mapas, ambos de String a Integer,
+		 * y retorne un nuevo mapa que contenga la intersección de los dos primeros. Por
+		 * ejemplo, si recibe los mapas: {Fernando=53, Manuela=29, Ana=41, Luis=65,
+		 * Mario=33, Adrián=21, Carmen=39, Elena=19} {Valentina=37, Ana=41, Mario=33,
+		 * Benito=67, Carmen=39, Ramón=44, Elena=19, Hugo=32} retornará el mapa:
+		 * {Ana=41, Mario=33, Carmen=39, Elena=19}
+		 */
 		Map<String, Integer> mapa = new LinkedHashMap<String, Integer>();
 
 		for (Entry<String, Integer> n : mapa1.entrySet()) {
@@ -272,6 +288,40 @@ public class Colecciones {
 			}
 		}
 		return mapa;
+	}
+
+	public static int ValorMenosRepetido(Map<String, Integer> mapa) {
+		/*
+		 * Método llamado valorMenosRepetido que acepte un mapa cuyas claves de tipo
+		 * String representan nombres de personas, y cuyos valores de tipo Integer
+		 * representan sus edades. El método retornará la edad que menos se repite
+		 * dentro del mapa. En caso de empate, retornará el valor menor. Por ejemplo, si
+		 * el mapa contiene: {Juan=33, Hugo=29, Ana=45, Luis=47, Mario=33, Rosa=29,
+		 * Carmen=33, Elena=59, Benito=33} El método retornará 45, que es el valor más
+		 * pequeño de los dos que menos se repiten (45 y 59 se repiten una sola vez).
+		 */
+		Map<Integer, Integer> mapaAux = new TreeMap<Integer, Integer>();
+		int min = 0;
+		int minKey = 0;
+		for (Entry<String, Integer> n : mapa.entrySet()) {
+			if (mapaAux.get(n.getValue()) != null) {
+				mapaAux.put(n.getValue(), mapaAux.get(n.getValue()) + 1);
+			} else {
+				mapaAux.put(n.getValue(), 1);
+			}
+		}
+
+		for (Entry<Integer, Integer> n : mapaAux.entrySet()) {
+			if (min == 0) {
+				min = n.getValue();
+				minKey = n.getKey();
+			}
+			if (n.getValue() < min) {
+				min = n.getValue();
+				minKey = n.getKey();
+			}
+		}
+		return minKey;
 	}
 
 }
