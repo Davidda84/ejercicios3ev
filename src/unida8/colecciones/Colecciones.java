@@ -7,8 +7,10 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.Iterator;
 
 public class Colecciones {
@@ -58,6 +60,19 @@ public class Colecciones {
 		pil.push(23);
 
 		System.out.println(negativosAbajoPositivosArriba(pil));
+
+		// Test6
+		List<Integer> listam = new ArrayList<Integer>();
+		listam.add(1);
+		listam.add(2);
+		listam.add(1);
+		listam.add(1);
+		listam.add(5);
+		listam.add(2);
+		listam.add(6);
+		listam.add(7);
+
+		System.out.println(moda(listam));
 
 	}
 
@@ -141,6 +156,36 @@ public class Colecciones {
 		}
 		return pila;
 
+	}
+
+	private static int moda(List<Integer> numeros) {
+
+		/*
+		 * Método llamado moda que acepte una lista de números enteros como parámetro y
+		 * retorne el número que se repite con mayor frecuencia (la moda). Retornar 0 si
+		 * la lista está vacía.
+		 */
+		if (!numeros.isEmpty()) {
+			Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
+			for (int n : numeros) {
+				if (map.containsKey(n)) {
+					map.put(n, map.get(n) + 1);
+				} else {
+					map.put(n, 1);
+				}
+			}
+			int max = 0;
+			int key = 0;
+			for (Entry<Integer, Integer> n : map.entrySet()) {
+				if (n.getValue() > max) {
+					max = n.getValue();
+					key = n.getKey();
+				}
+			}
+			return key;
+		} else {
+			return 0;
+		}
 	}
 
 }
