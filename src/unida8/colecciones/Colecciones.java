@@ -6,6 +6,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +94,28 @@ public class Colecciones {
 
 		System.out.println(pilrep);
 		System.out.println(eliminarSiMayoresEncima(pilrep));
+
+		// Test8
+		Map<String, Integer> mapa1 = new LinkedHashMap<>();
+		mapa1.put("Fernando", 53);
+		mapa1.put("Manuela", 29);
+		mapa1.put("Ana", 41);
+		mapa1.put("Luis", 65);
+		mapa1.put("Mario", 33);
+		mapa1.put("Adrián", 21);
+		mapa1.put("Carmen", 39);
+		mapa1.put("Elena", 19);
+		Map<String, Integer> mapa2 = new LinkedHashMap<>();
+		mapa2.put("Valentina", 37);
+		mapa2.put("Ana", 41);
+		mapa2.put("Mario", 33);
+		mapa2.put("Benito", 67);
+		mapa2.put("Carmen", 39);
+		mapa2.put("Ramón", 44);
+		mapa2.put("Elena", 19);
+		mapa2.put("Hugo", 32);
+
+		System.out.println(interseccion(mapa1, mapa2));
 
 	}
 
@@ -232,6 +255,23 @@ public class Colecciones {
 			pila.push(pilaaux.poll());
 		}
 		return pila;
+	}
+	
+	public static Map<String, Integer> interseccion(Map<String, Integer> mapa1, Map<String, Integer> mapa2) {
+		/*Método llamado interseccion que acepte dos mapas, ambos de String a Integer, y retorne un
+		nuevo mapa que contenga la intersección de los dos primeros. Por ejemplo, si recibe los mapas:
+		{Fernando=53, Manuela=29, Ana=41, Luis=65, Mario=33, Adrián=21, Carmen=39, Elena=19}
+		{Valentina=37, Ana=41, Mario=33, Benito=67, Carmen=39, Ramón=44, Elena=19, Hugo=32}
+		retornará el mapa:
+		{Ana=41, Mario=33, Carmen=39, Elena=19}*/
+		Map<String, Integer> mapa = new LinkedHashMap<String, Integer>();
+
+		for (Entry<String, Integer> n : mapa1.entrySet()) {
+			if (mapa2.entrySet().contains(n)) {
+				mapa.put(n.getKey(), n.getValue());
+			}
+		}
+		return mapa;
 	}
 
 }
