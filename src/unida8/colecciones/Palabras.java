@@ -33,7 +33,7 @@ public class Palabras {
 	}
 
 	public void addPalabras(String cadena) {
-		for (String s : cadena.split(" ")) {
+		for (String s : cadena.split("\\P{L}+")) {
 			this.addPalabra(s);
 		}
 	}
