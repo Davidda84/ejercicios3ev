@@ -158,6 +158,15 @@ public class Colecciones {
 		listan2.add(10);
 		listan2.add(2);
 		System.out.println(contarComunes(listan1, listan2));
+		
+		//Test12
+        Deque <Integer> numeros3 = new LinkedList<Integer>();
+        numeros3.push(7);
+        numeros3.push(6);
+        numeros3.push(2);
+        numeros3.push(9);
+        numeros3.push(5);
+        System.out.println(duplicar(numeros3));
 
 	}
 
@@ -410,5 +419,23 @@ public class Colecciones {
 
 		return norepetidos1.size();
 	}
+	
+	public static Deque<Integer> duplicar(Deque<Integer> numeros) {
+		/*Método llamado duplicar que acepte una pila de números enteros como parámetro y sustituya cada
+		valor almacenado por el mismo duplicado, manteniendo el orden original.
+		Por ejemplo, dada la pila:
+		Tope → [5, 9, 2, 6, 7]
+		Almacenará en ella los valores:
+		Tope → [5, 5, 9, 9, 2, 2, 6, 6, 7, 7]*/
+			
+			Queue<Integer> pilaAux = new LinkedList<Integer>();
+			while(!numeros.isEmpty()) {
+				pilaAux.offer(numeros.peek());
+				pilaAux.offer(numeros.pop());
+			}
+			
+			return (Deque<Integer>) pilaAux;
+			
+		}
 
 }
