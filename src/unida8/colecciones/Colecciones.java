@@ -131,6 +131,15 @@ public class Colecciones {
 
 		System.out.println(ValorMenosRepetido(mapa3));
 
+		// Test10
+		List<String> fruta = new ArrayList<String>();
+		fruta.add("banana");
+		fruta.add("pera");
+		fruta.add("melón");
+		fruta.add("sandía");
+
+		System.out.println(cuentaPares(fruta));
+
 	}
 
 	private static void eliminarLasDeLongitudPar(Set<String> conjunto) {
@@ -322,6 +331,33 @@ public class Colecciones {
 			}
 		}
 		return minKey;
+	}
+	
+	public static Map<String, Integer> cuentaPares(List<String> lista) {
+		/*Método llamado cuentaPares que acepte una lista de cadenas que representan palabras individuales y
+		retorne una estructura de datos en la que se almacene el resultado de contar el número de ocurrencias de
+		cada secuencia de dos caracteres. Por ejemplo, dada la lista:
+		[banana, pera, melón, o, sandía]
+		• La palabra banana contiene los pares ba, an, na, an, na.
+		• La palabra pera contiene los pares pe, er, ra.
+		• La palabra melón contiene los pares me, el, ló, ón.
+		• La palabra o no contiene secuencias de dos caracteres por ser de longitud uno.
+		• La palabra sandía contiene los pares sa, an, nd, dí, ía.
+		Por tanto, el par ba se repite una vez, el par an tres veces, el par na dos veces, etc*/
+		
+		Map<String, Integer> mapa = new HashMap<String, Integer>();
+		for (String p : lista) {
+			for (int i = 0; i < p.length() - 1; i++) {
+				String par = String.valueOf(p.charAt(i)) + String.valueOf(p.charAt(i + 1));
+				if (!mapa.containsKey(par)) {
+					mapa.put(par, 1);
+				}
+				else {
+					mapa.put(par, mapa.get(par) + 1);
+				}
+			}
+		}
+		return mapa;
 	}
 
 }
