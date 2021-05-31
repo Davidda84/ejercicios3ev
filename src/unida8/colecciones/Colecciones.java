@@ -1,7 +1,9 @@
 package unida8.colecciones;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,6 +33,15 @@ public class Colecciones {
 		map.put("Fran", "Fran");
 		map.put("Luna", "Luna");
 		System.out.println(valoresUnicos(map));
+
+		// Test4
+		List<String> lista = new ArrayList<String>();
+		lista.add("uno");
+		lista.add("dos");
+		lista.add("tres");
+		lista.add("cuatro");
+
+		System.out.println(algunaSeRepiteAlMenos3Veces(lista));
 
 	}
 
@@ -69,6 +80,28 @@ public class Colecciones {
 		}
 		return true;
 		// return mapa.values().stream().distinct().count() == mapa.values().size();
+	}
+	
+	private static boolean algunaSeRepiteAlMenos3Veces(List<String> cadena) {
+		/*
+		 * Método llamado algunaSeRepiteAlMenos3Veces que acepte una lista de cadenas
+		 * como parámetro y retornoe verdadero si alguna cadena se repite al menos 3
+		 * veces en la lista o falso en caso contrario. Resolver el problema utilizando
+		 * un mapa como almacenamiento auxiliar.
+		 */
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		for (String s : cadena) {
+			if (map.containsKey(s)) {
+				if (map.get(s) == 2) {
+					return true;
+				} else {
+					map.put(s, map.get(s) + 1);
+				}
+			} else {
+				map.put(s, 1);
+			}
+		}
+		return false;
 	}
 
 }
