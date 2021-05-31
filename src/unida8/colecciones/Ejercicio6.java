@@ -1,7 +1,15 @@
 package unida8.colecciones;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
@@ -42,6 +50,12 @@ public class Ejercicio6 {
 			case "contactos":
 				System.out.println(agenda.toString().replace("{","").replace("}","").replace("[","").replace("]",""));
 				break;
+			case "guardar":
+				guardar(arrayEntrada[1]);
+				break;
+			case "cargar":
+				cargar(arrayEntrada[1]);
+				break;
 			case "salir":
 				return false;
 		}
@@ -52,10 +66,10 @@ public class Ejercicio6 {
 		if(agenda.get(string) != null) {
 			Set<Integer> telefonos = agenda.get(string);
 			if(telefonos.size() > 1){
-				System.out.print("Teléfonos: ");
+				System.out.print("TelÃ©fonos: ");
 			}
 			else {
-				System.out.print("Teléfono: ");
+				System.out.print("TelÃ©fono: ");
 			}
 			System.out.println(telefonos.toString().replace("[", "").replace("]", ""));
 		}
@@ -76,7 +90,94 @@ public class Ejercicio6 {
 			telefonos.add(telefono);
 			agenda.put(nombre, telefonos);
 		}
-		System.out.println("El contacto ha sido añadido a la agenda");
+		System.out.println("El contacto ha sido aÃ±adido a la agenda");
+	}
+	
+	private static void guardar(String string) {
+		File archivo = new File (string);
+		if(!archivo.exists()) {
+			try(PrintWriter writer = new PrintWriter(new FileWriter(archivo))){
+				for(Entry<String,Set<Integer>> e : agenda.entrySet()) {
+					writer.println(e.getKey() + " - " +e.getValue().toString().replace("[", "").replace("]", ""));
+				}
+				System.out.println("Archivo agenda creado");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			String linea;
+			Map<String,String> agendaExistente = new TreeMap<String,String>();
+			try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+				while((linea = reader.readLine())!=null) {
+					String[] contacto = linea.split(" - ");
+					agendaExistente.put(contacto[0], contacto[1]);
+				}
+				Set<String> agendaKeys = agenda.keySet();
+				for(String s: agendaKeys) {
+					if(!agendaExistente.containsKey(s)) {
+						agendaExistente.put(s, agenda.get(s).toString().replace("[", "").replace("]", ""));
+					}
+					else {
+						if(!agendaExistente.get(s).equalsIgnoreCase(agenda.get(s).toString().replace("[", "").replace("]", ""))) {
+							agendaExistente.put(s, agenda.get(s).toString().replace("[", "").replace("]", ""));
+						}
+					}
+				}
+				
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try(PrintWriter writer = new PrintWriter(new FileWriter(archivo))){
+				for(Entry<String,String> e : agendaExistente.entrySet()) {
+					writer.println(e.getKey() + " - " +e.getValue());
+				}
+				System.out.println("Archivo agenda modificado");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private static void cargar(String string) {
+		File archivo = new File (string);
+		String linea;
+		Map<String,String> agendaExistente = new TreeMap<String,String>();
+		try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+			while((linea = reader.readLine())!=null) {
+				String[] contacto = linea.split(" - ");
+				agendaExistente.put(contacto[0], contacto[1]);
+			}
+			Set<String> agendaKeys = agenda.keySet();
+			for(String s: agendaKeys) {
+				if(!agendaExistente.containsKey(s)) {
+					agendaExistente.put(s, agenda.get(s).toString().replace("[", "").replace("]", ""));
+				}
+				else {
+					if(!agendaExistente.get(s).equalsIgnoreCase(agenda.get(s).toString().replace("[", "").replace("]", ""))) {
+						System.out.println("El telefono de " + s + " es diferente al existente en la agenda, Â¿Desea modificarlo? S/N");
+						String respuesta = teclado.nextLine();
+						if(respuesta.equalsIgnoreCase("S")) {
+							guardar(string);
+						}
+						else {
+							System.out.println("No se ha modificado la agenda");
+						}
+					}
+				}
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
