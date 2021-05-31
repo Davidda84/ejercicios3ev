@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class Colecciones {
 
@@ -139,6 +140,24 @@ public class Colecciones {
 		fruta.add("sandía");
 
 		System.out.println(cuentaPares(fruta));
+
+		// Test11
+		List<Integer> listan1 = new LinkedList<>();
+		List<Integer> listan2 = new LinkedList<>();
+		listan1.add(2);
+		listan1.add(3);
+		listan1.add(6);
+		listan1.add(4);
+		listan1.add(6);
+		listan1.add(10);
+		listan2.add(2);
+		listan2.add(3);
+		listan2.add(6);
+		listan2.add(4);
+		listan2.add(6);
+		listan2.add(10);
+		listan2.add(2);
+		System.out.println(contarComunes(listan1, listan2));
 
 	}
 
@@ -332,32 +351,64 @@ public class Colecciones {
 		}
 		return minKey;
 	}
-	
+
 	public static Map<String, Integer> cuentaPares(List<String> lista) {
-		/*Método llamado cuentaPares que acepte una lista de cadenas que representan palabras individuales y
-		retorne una estructura de datos en la que se almacene el resultado de contar el número de ocurrencias de
-		cada secuencia de dos caracteres. Por ejemplo, dada la lista:
-		[banana, pera, melón, o, sandía]
-		• La palabra banana contiene los pares ba, an, na, an, na.
-		• La palabra pera contiene los pares pe, er, ra.
-		• La palabra melón contiene los pares me, el, ló, ón.
-		• La palabra o no contiene secuencias de dos caracteres por ser de longitud uno.
-		• La palabra sandía contiene los pares sa, an, nd, dí, ía.
-		Por tanto, el par ba se repite una vez, el par an tres veces, el par na dos veces, etc*/
-		
+		/*
+		 * Método llamado cuentaPares que acepte una lista de cadenas que representan
+		 * palabras individuales y retorne una estructura de datos en la que se almacene
+		 * el resultado de contar el número de ocurrencias de cada secuencia de dos
+		 * caracteres. Por ejemplo, dada la lista: [banana, pera, melón, o, sandía] • La
+		 * palabra banana contiene los pares ba, an, na, an, na. • La palabra pera
+		 * contiene los pares pe, er, ra. • La palabra melón contiene los pares me, el,
+		 * ló, ón. • La palabra o no contiene secuencias de dos caracteres por ser de
+		 * longitud uno. • La palabra sandía contiene los pares sa, an, nd, dí, ía. Por
+		 * tanto, el par ba se repite una vez, el par an tres veces, el par na dos
+		 * veces, etc
+		 */
+
 		Map<String, Integer> mapa = new HashMap<String, Integer>();
 		for (String p : lista) {
 			for (int i = 0; i < p.length() - 1; i++) {
 				String par = String.valueOf(p.charAt(i)) + String.valueOf(p.charAt(i + 1));
 				if (!mapa.containsKey(par)) {
 					mapa.put(par, 1);
-				}
-				else {
+				} else {
 					mapa.put(par, mapa.get(par) + 1);
 				}
 			}
 		}
 		return mapa;
+	}
+
+	public static int contarComunes(List<Integer> lista1, List<Integer> lista2) {
+		/*
+		 * Método llamado contarComunes que acepte dos listas como parámetros y retorne
+		 * la cantidad de números que tienen en común sin contar los repetidos.
+		 */
+
+		Set<Integer> norepetidos1 = new TreeSet<Integer>();
+		Set<Integer> norepetidos2 = new TreeSet<Integer>();
+		Set<Integer> repetidos = new TreeSet<Integer>();
+
+		for (int i : lista1) {
+			if (!norepetidos1.add(i)) {
+				repetidos.add(i);
+			}
+		}
+
+		norepetidos1.removeAll(repetidos);
+		repetidos.clear();
+
+		for (int i : lista2) {
+			if (!norepetidos2.add(i)) {
+				repetidos.add(i);
+			}
+		}
+
+		norepetidos2.removeAll(repetidos);
+		norepetidos1.retainAll(norepetidos2);
+
+		return norepetidos1.size();
 	}
 
 }
