@@ -1,9 +1,11 @@
 package unida8.colecciones;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +13,6 @@ import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.Iterator;
 
 public class Colecciones {
 
@@ -73,6 +74,25 @@ public class Colecciones {
 		listam.add(7);
 
 		System.out.println(moda(listam));
+
+		// Test7
+		Deque<Integer> pilrep = new LinkedList<Integer>();
+
+		pilrep.push(6);
+		pilrep.push(22);
+		pilrep.push(17);
+		pilrep.push(17);
+		pilrep.push(10);
+		pilrep.push(7);
+		pilrep.push(9);
+		pilrep.push(14);
+		pilrep.push(5);
+		pilrep.push(12);
+		pilrep.push(7);
+		pilrep.push(2);
+
+		System.out.println(pilrep);
+		System.out.println(eliminarSiMayoresEncima(pilrep));
 
 	}
 
@@ -186,6 +206,32 @@ public class Colecciones {
 		} else {
 			return 0;
 		}
+	}
+
+	public static Deque<Integer> eliminarSiMayoresEncima(Deque<Integer> pila) {
+		/*
+		 * Método llamado eliminarSiMayoresEncima que acepte una pila de números enteros
+		 * como parámetro y elimine de ella los elementos que tienen por encima alguno
+		 * cuyo valor sea mayor. Por ejemplo, suponiendo que una pila almacena los
+		 * siguientes números: Tope → [2, 7, 12, 5, 14, 9, 7, 10, 17, 17, 22, 6] Los
+		 * números 5, 9, 7, 10 y 6 deben eliminarse porque todos ellos tienen algún
+		 * número mayor por encima. Sólo se permite el uso de otras pilas o colas para
+		 * solucionar este problema.
+		 */
+		Deque<Integer> pilaaux = new ArrayDeque<Integer>();
+		while (!pila.isEmpty()) {
+			if (pilaaux.isEmpty()) {
+				pilaaux.push(pila.pop());
+			}
+			int n = pila.pop();
+			if (n >= pilaaux.peek()) {
+				pilaaux.push(n);
+			}
+		}
+		while (!pilaaux.isEmpty()) {
+			pila.push(pilaaux.poll());
+		}
+		return pila;
 	}
 
 }
