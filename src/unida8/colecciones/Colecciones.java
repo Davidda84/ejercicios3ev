@@ -1,6 +1,8 @@
 package unida8.colecciones;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class Colecciones {
@@ -23,6 +25,13 @@ public class Colecciones {
 		seti.add(4);
 		System.out.println(contieneImpares(seti));
 
+		// Test3
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("Juan", "Antonio");
+		map.put("Fran", "Fran");
+		map.put("Luna", "Luna");
+		System.out.println(valoresUnicos(map));
+
 	}
 
 	private static void eliminarLasDeLongitudPar(Set<String> conjunto) {
@@ -34,7 +43,7 @@ public class Colecciones {
 		conjunto.removeIf(n -> (n.length() % 2 == 0));
 		System.out.println(conjunto);
 	}
-	
+
 	private static boolean contieneImpares(Set<Integer> conjunto) {
 		/*
 		 * Método llamado contieneImpares que acepte un conjunto de números enteros y
@@ -44,6 +53,22 @@ public class Colecciones {
 		 * for(int n: conjunto) { if(n%2 != 0) { return true; } } return false;
 		 */
 		return conjunto.stream().anyMatch(n -> (n % 2 != 0));
+	}
+
+	private static boolean valoresUnicos(Map<String, String> mapa) {
+		/*
+		 * Método llamado valoresUnicos que acepte un mapa de cadenas a cadenas y
+		 * retorne false si dos o más claves se asocian a un mismo valor o true en caso
+		 * contrario.
+		 */
+		Set<String> set = new HashSet<String>();
+		for (String s : mapa.values()) {
+			if (!set.add(s)) {
+				return false;
+			}
+		}
+		return true;
+		// return mapa.values().stream().distinct().count() == mapa.values().size();
 	}
 
 }
